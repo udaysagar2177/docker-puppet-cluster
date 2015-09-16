@@ -5,6 +5,11 @@ RUN apt-get install -y vim
 RUN apt-get install -y curl
 RUN apt-get -y install wget dpkg net-tools
 
+# Puppet Setup
+RUN apt-get install -y puppet
+RUN mkdir /opt/setup
+ADD puppet_slave.conf /etc/puppet/puppet.conf
+
 # Install Software like apache, memcached etc
 
 # APACHE
@@ -34,10 +39,6 @@ RUN apt-get install -y apache2
 #    tar xfz /tmp/kafka_2.11-0.8.2.1.tgz -C /opt && \
 #    rm /tmp/kafka_2.11-0.8.2.1.tgz
 
-# Puppet Setup
-RUN apt-get install -y puppet
-RUN mkdir /opt/setup
-ADD puppet_slave.conf /etc/puppet/puppet.conf
  
 
 ADD install_software.sh /opt/setup/scripts/
