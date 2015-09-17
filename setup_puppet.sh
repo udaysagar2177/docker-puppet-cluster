@@ -32,7 +32,7 @@ sleep 10
 for os in  ${os_array[@]}
 do
     if [ -d $os ]; then
-      random_runinterval=$(shuf -i 60-110 -n 1)
+      random_runinterval=$(awk -vmin=60 -vmax=110 'BEGIN{srand(); print int(min+rand()*(max-min+1))}')
       docker run -d --name $os -e "random_runinterval=${random_runinterval}" -h $os --link puppet:puppet $os
       echo "waiting for this puppet agent to shake hands with puppet master"
       echo "random runinterval for this agent is ${random_runinterval}"
