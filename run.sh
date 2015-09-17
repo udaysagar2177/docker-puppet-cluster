@@ -7,8 +7,7 @@ for SCRIPT in /opt/setup/scripts/*; do
   fi
 done
 
-random=$(shuf -i 70-150 -n 1)
-sed -i -e "s/runinterval=60/runinterval=${random}/g" /etc/puppet/puppet.conf
+sed -i -e "s/runinterval=60/runinterval=${random_runinterval}/g" /etc/puppet/puppet.conf
 
 #puppet agent --test --debug --waitforcert=30
 puppet agent --enable

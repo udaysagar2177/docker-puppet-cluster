@@ -36,10 +36,9 @@ RUN apt-get install -y apache2
 
 # Puppet Setup
 RUN apt-get install -y puppet
-RUN mkdir /opt/setup
 ADD puppet_slave.conf /etc/puppet/puppet.conf
  
-
+RUN mkdir /opt/setup
 ADD install_software.sh /opt/setup/scripts/
 ADD run.sh /opt/setup/
 

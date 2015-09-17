@@ -32,8 +32,10 @@ sleep 10
 for os in  ${os_array[@]}
 do
     if [ -d $os ]; then
-      docker run -d --name $os -h $os --link puppet:puppet $os
+      random_runinterval=$(shuf -i 60-110 -n 1)
+      docker run -d --name $os -e "random_runinterval=${random_runinterval}" -h $os --link puppet:puppet $os
       echo "waiting for this puppet agent to shake hands with puppet master"
+      echo "random runinterval for this agent is ${random_runinterval}"
       sleep 2
     fi
 done
