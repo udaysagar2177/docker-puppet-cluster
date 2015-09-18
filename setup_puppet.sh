@@ -19,8 +19,9 @@ do
       cp ../install_software.sh .
       cp ../run.sh .
       cp ../puppet_slave.conf .
+      cp ../check_puppet_status.rb .
       docker build $no_cache -t $os .
-      rm install_software.sh run.sh puppet_slave.conf
+      rm install_software.sh run.sh puppet_slave.conf check_puppet_status.rb
       cd ..
     fi
 done

@@ -39,6 +39,7 @@ RUN apt-get install -y puppet
 ADD puppet_slave.conf /etc/puppet/puppet.conf
  
 RUN mkdir /opt/setup
+ADD check_puppet_status.rb /opt/setup/
 ADD install_software.sh /opt/setup/scripts/
 ADD run.sh /opt/setup/
 
