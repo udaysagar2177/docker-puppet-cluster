@@ -1,10 +1,6 @@
 FROM quay.io/signalfuse/amazon-linux-2015.03
 
-RUN yum -y update
 RUN yum install -y vim curl wget net-tools
-
-# Install Software like apache, memcached etc
-RUN yum install -y httpd
 
 # Install puppet
 RUN rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-5.noarch.rpm
