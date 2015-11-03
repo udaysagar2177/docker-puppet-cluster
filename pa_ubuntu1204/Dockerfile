@@ -35,6 +35,9 @@ RUN apt-get install -y apache2
 #    rm /tmp/kafka_2.11-0.8.2.1.tgz
 
 # Puppet Setup
+RUN wget https://apt.puppetlabs.com/puppetlabs-release-precise.deb --no-check-certificate
+RUN dpkg -i puppetlabs-release-precise.deb
+RUN apt-get update
 RUN apt-get install -y puppet
 ADD puppet_slave.conf /etc/puppet/puppet.conf
  
