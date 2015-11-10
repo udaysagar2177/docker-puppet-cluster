@@ -1,8 +1,9 @@
 #!/bin/bash
-set -e
+
 
 if [[ $(docker ps -a | grep "puppet") ]]; then
    docker rm -f  puppet
+   docker rm -f  puppetdb
 else
    echo "container not found for puppet"
 fi

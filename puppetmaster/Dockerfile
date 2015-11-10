@@ -1,11 +1,19 @@
 FROM ubuntu:14.04
 
-RUN apt-get update
-RUN apt-get install -y vim curl wget
+RUN apt-get install -y wget
 RUN wget https://apt.puppetlabs.com/puppetlabs-release-trusty.deb && \
-sudo dpkg -i puppetlabs-release-trusty.deb && \
-sudo apt-get update -yq && sudo apt-get upgrade -yq && \
-sudo apt-get install -yq puppetmaster
+    dpkg -i puppetlabs-release-trusty.deb && \
+    apt-get update && \
+    apt-get install -yq puppetmaster
+
+RUN apt-get install -y git vim curl
+
+RUN apt-get install -y puppet
+
+# Install puppet collections from puppetlabs
+RUN wget https://apt.puppetlabs.com/puppetlabs-release-pc1-trusty.deb && \
+    dpkg -i puppetlabs-release-pc1-trusty.deb && \
+    apt-get update
 
 ADD autosign.conf /etc/puppet/autosign.conf
 EXPOSE 8140

@@ -1,2 +1,3 @@
+syncPuppetCluster.sh
 puppetmaster/manifests/site.pp
 puppetmaster/modules/*
