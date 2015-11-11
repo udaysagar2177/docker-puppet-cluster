@@ -13,13 +13,15 @@ function get_random_runinterval()
     random_runinterval=$(awk -vmin=60 -vmax=110 'BEGIN{srand(); print int(min+rand()*(max-min+1))}')
 }
 
-os_array=(puppetdb pa_ubuntu1204)
-#os_array=(pa_ubuntu1204 pa_ubuntu1404 pa_ubuntu1504 pa_centos5 pa_centos6 pa_centos7 pa_amzlinux201409 pa_amzlinux201503 pa_amzlinux201509)
+#os_array=(puppetdb pa_ubuntu1204)
+os_array=(pa_ubuntu1204 pa_ubuntu1404 pa_ubuntu1504 pa_centos5 pa_centos6 pa_centos7 pa_amzlinux201409 pa_amzlinux201503 pa_amzlinux201509)
 
 # build docker images only if build argument is passed
 if [ $1 = "build" ]; then
   cd /opt/puppetcluster/puppetmaster
+  cp ../supervisord.conf .
   docker build $no_cache -t puppet .
+  rm -f supervisord.conf
   cd ..
   for os in  ${os_array[@]}
   do
@@ -37,14 +39,11 @@ if [ $1 = "build" ]; then
 fi
 
 # START PUPPETMASTER
-docker run -d -h "puppet" --name puppet -v /opt/puppetcluster/puppetmaster/manifests:/etc/puppet/manifests -v /opt/puppetcluster/puppetmaster/modules:/etc/puppet/modules puppet
+docker run -d -h "puppet" --add-host "puppet.ec2.internal:127.0.0.1" --name puppet -v /opt/puppetcluster/puppetmaster/manifests:/etc/puppet/manifests -v /opt/puppetcluster/puppetmaster/modules:/etc/puppet/modules puppet
 echo "Sleeping to let the puppet master start"
 sleep 5
 # START AN AGENT ON PUPPETMASTER
-#docker exec puppet bash -c "puppet agent --enable && puppet agent"
-# START PUPPETDB
-#get_random_runinterval
-#docker run -d --name puppetdb -e "random_runinterval=${random_runinterval}" -h "puppetdb" --link puppet:puppet pa_ubuntu1404
+docker exec puppet bash -c "puppet agent --enable && puppet agent"
 # START DIFFERENT PUPPET AGENTS
 for os in  ${os_array[@]}
 do
