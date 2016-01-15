@@ -30,7 +30,10 @@ if [ $1 = "build" ]; then
   done
 fi
 
-# START CONTAINERS
+# Check and stop running puppet cluster
+./destroy_puppet.sh
+
+# Start puppet cluster
 docker run -d -h "puppet" --name puppet -v /opt/puppetcluster/puppetmaster/manifests:/etc/puppet/manifests -v /opt/puppetcluster/puppetmaster/modules:/etc/puppet/modules puppet
 echo "Sleeping to let the puppet master start"
 sleep 10
