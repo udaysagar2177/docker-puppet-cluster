@@ -13,7 +13,7 @@ os_array=(pa_ubuntu1204 pa_ubuntu1404 pa_ubuntu1504 pa_centos5 pa_centos6 pa_cen
 # build docker images only if build argument is passed
 if [ $1 = "build" ]; then
   (
-    cd /opt/puppetcluster/puppetmaster
+    cd ./puppetmaster
     docker build $no_cache -t puppet .
   )
   (
@@ -38,8 +38,8 @@ fi
 ./destroy_puppet.sh
 
 # Start puppet cluster
-docker run -d -h "puppet" --name puppet -v /opt/puppetcluster/puppetmaster/manifests:/etc/puppet/manifests -v /opt/puppetcluster/puppetmaster/modules:/etc/puppet/modules puppet
-echo "Sleeping to let the puppet master start"
+docker run -d -h "puppet" --name puppet -v $(pwd)/puppetmaster/manifests:/etc/puppet/manifests -v $(pwd)/puppetmaster/modules:/etc/puppet/modules puppet
+echo "Sleeping to let the puppetmaster start and initialize"
 sleep 10
 ( 
   cd ./puppetslaves
