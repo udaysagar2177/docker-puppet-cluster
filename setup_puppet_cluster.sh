@@ -1,9 +1,31 @@
 #!/bin/bash
 set -xe
 
-# pass no-cache to build docker images with out using cache
-if [ $2 = "no_cache" ]; then
-   no_cache="--no-cache"
+while [[  "$#" -gt "0" ]]
+do
+  key="$1"
+  case $key in
+    -b|--build)
+      BUILD="true"
+      ;;
+    -n|--no-cache)
+      NO_CACHE="true"
+      ;;
+      *)
+      echo "Unknown Option"
+      ;;
+  esac
+  shift
+done
+
+
+# Check NO_CACHE and build images with out using cache
+if [ "$NO_CACHE" = "true" ]; then
+  if [ "$BUILD" = "true" ]; then
+    no_cache="--no-cache"
+  else
+    echo "-n|--no-cache is valid only if -b|--build is given"
+  fi
 else
    no_cache=""
 fi
@@ -11,7 +33,7 @@ fi
 os_array=(pa_ubuntu1204 pa_ubuntu1404 pa_ubuntu1504 pa_centos5 pa_centos6 pa_centos7 pa_amzlinux201409 pa_amzlinux201503 pa_amzlinux201509)
 
 # build docker images only if build argument is passed
-if [ $1 = "build" ]; then
+if [ "$BUILD" = "true" ]; then
   (
     cd ./puppetmaster
     docker build $no_cache -t puppet .
@@ -35,7 +57,7 @@ if [ $1 = "build" ]; then
 fi
 
 # Check and stop running puppet cluster
-./destroy_puppet.sh
+./shutdown_puppet_cluster.sh
 
 # Start Puppet agents
 docker run \
