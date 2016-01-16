@@ -17,7 +17,7 @@ if [ $1 = "build" ]; then
     docker build $no_cache -t puppet .
   )
   (
-    cd ./puppetslaves
+    cd ./puppetagents
     for os in  ${os_array[@]}
     do
         if [ -d $os ]; then
@@ -37,17 +37,31 @@ fi
 # Check and stop running puppet cluster
 ./destroy_puppet.sh
 
-# Start puppet cluster
-docker run -d -h "puppet" --name puppet -v $(pwd)/puppetmaster/manifests:/etc/puppet/manifests -v $(pwd)/puppetmaster/modules:/etc/puppet/modules puppet
+# Start Puppet agents
+docker run \
+    -d \
+    -h "puppet" \
+    --name puppet \
+    -v $(pwd)/puppetmaster/manifests:/etc/puppet/manifests \
+    -v $(pwd)/puppetmaster/modules:/etc/puppet/modules \
+    puppet
 echo "Sleeping to let the puppetmaster start and initialize"
 sleep 10
+
+# Start Puppet agents
 ( 
-  cd ./puppetslaves
+  cd ./puppetagents
   for os in  ${os_array[@]}
   do
       if [ -d $os ]; then
         random_runinterval=$(awk -vmin=60 -vmax=110 'BEGIN{srand(); print int(min+rand()*(max-min+1))}')
-        docker run -d --name $os -e "random_runinterval=${random_runinterval}" -h $os --link puppet:puppet $os
+        docker run \
+            -d \
+            --name $os \
+            -e "random_runinterval=${random_runinterval}" \
+            -h $os \
+            --link puppet:puppet \
+            $os
         echo "waiting for this puppet agent to shake hands with puppet master"
         echo "random runinterval for this agent is ${random_runinterval}"
         sleep 2
