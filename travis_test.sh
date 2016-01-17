@@ -32,11 +32,20 @@ function test(){
 	./shutdown_puppet_cluster.sh
 }
 
+# Test if setup_puppet_cluster.sh contains correct os_array
+ORIGINAL_LINE="os_array=(pa_ubuntu1204 pa_ubuntu1404 pa_ubuntu1504 pa_centos5 pa_centos6)"
+if grep "$ORIGNAL_LINE" setup_puppet_cluster.sh
+then
+    echo "setup_puppet_cluster.sh contains correct os_array"
+else
+    echo "setup_puppet_cluster.sh does not contain correct os_array"
+    exit 1
+fi
+
 # setup Puppet cluster by building the images with out using cache
 test "-b -n"
 
 # setup Puppet cluster with only 3 Puppet agents running on pa_ubuntu1404
-ORIGINAL_LINE="os_array=(pa_ubuntu1204 pa_ubuntu1404 pa_ubuntu1504 pa_centos5 pa_centos6)"
 NEW_LINE="os_array=(pa_ubuntu1404 pa_ubuntu1404 pa_ubuntu1404)"
 sed -i -e "s/$ORIGINAL_LINE/$NEW_LINE/" setup_puppet_cluster.sh
 test
