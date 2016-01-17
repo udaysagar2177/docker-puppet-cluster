@@ -1,3 +1,5 @@
 puppetmaster/manifests/site.pp
 puppetmaster/modules/*
 cluster.txt
+*.sh-e
+*.she
