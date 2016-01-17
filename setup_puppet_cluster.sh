@@ -114,7 +114,7 @@ do
           -d \
           --name puppet_agent_$AGENT_SERIAL_NUMBER \
           -e "random_runinterval=${random_runinterval}" \
-          -h $os \
+          -h $os_$AGENT_SERIAL_NUMBER \
           --link puppet:puppet \
           $os
       echo "puppet_agent_${AGENT_SERIAL_NUMBER}" >> $CONTAINERS_LIST_FILE
