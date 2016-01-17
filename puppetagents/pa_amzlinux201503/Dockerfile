@@ -1,4 +1,4 @@
-FROM quay.io/signalfuse/amazon-linux-2015.03
+FROM ambakshi/amazon-linux:2015.03
 
 RUN yum install -y vim curl wget net-tools
 
