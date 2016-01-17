@@ -23,5 +23,8 @@ do
   fi
 done
 
+# Test if check_cluster_status.sh is working properly
+(cd scripts && ./check_cluster_status.sh)
+
 # shutdown the cluster
 ./shutdown_puppet_cluster.sh
