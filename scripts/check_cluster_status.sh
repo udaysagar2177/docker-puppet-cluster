@@ -1,14 +1,18 @@
 #!/bin/bash
 
-os_array=(pa_ubuntu1204 pa_ubuntu1404 pa_ubuntu1504 pa_centos5 pa_centos6 pa_centos7 pa_amzlinux201409 pa_amzlinux201503 pa_amzlinux201509)
-for os in  ${os_array[@]}
+CONTAINERS_LIST_FILE="../cluster.txt"
+
+get_status_from_container(){
+	os=$1
+	status=$(docker exec $os bash -c /opt/setup/check_puppet_status.rb)
+	if [[ "$status" =~ "OK" ]]; then
+	  echo "${os} : OK"
+	else
+	  echo $status
+	fi
+}
+
+cat "$CONTAINERS_LIST_FILE" | while read container
 do
-    if [ -d $os ]; then
-       status=$(docker exec -it $os bash -c /opt/setup/check_puppet_status.rb)
-       if [[ "$status" =~ "OK" ]]; then
-          echo "${os} : OK"
-       else
-          echo $status
-       fi
-    fi
+  get_status_from_container $container
 done
