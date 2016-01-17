@@ -37,7 +37,7 @@ os_array=(pa_ubuntu1204 pa_ubuntu1404 pa_ubuntu1504 pa_centos5 pa_centos6 pa_amz
 
 # Build the given docker image
 build_docker_image(){
-  $os=$1
+  os=$1
   (
     cd ./puppetagents
     if [ -d $os ]; then
