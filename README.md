@@ -1,4 +1,5 @@
 # Puppet Cluster on Docker Containers
+[![Build Status](https://travis-ci.org/udaysagar2177/docker-puppet-cluster.svg?branch=master)](https://travis-ci.org/udaysagar2177/docker-puppet-cluster)
 
 ## About
 Complete automated setup of Puppet cluster using Docker
@@ -21,8 +22,8 @@ You can now setup a Puppetmaster and 8 Puppet agents by executing just one scrip
 ##### setup_puppet_cluster.sh
 Use this script to setup and start the cluster. You can tweak this script to customize the type of operating system on which your Puppet agents must be running.  
 Two command line options are available to this script. They are
-  * -b|--build builds the docker images of Puppet master and Puppet agents
-  * -n|--no-cache does not use cache to build the images, this is valid only when -b is given
+  * -b | --build&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builds the docker images of Puppet master and Puppet agents
+  * -n | --no-cache&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;does not use cache to build the images, this is valid only when -b is given
 
 This script will write the names of the launched Docker containers into a local file `cluster.txt`. This file will be used by other scripts to interact with the containers and so, it uses a naming convention. The Puppet master must be named as 'puppet'. The Puppet agents must be named as puppet_agent_\<serial_number\>. By default, setup_puppet_cluster.sh follows this convention.
 
