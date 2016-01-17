@@ -82,7 +82,9 @@ if [ "$BUILD" = "true" ]; then
 fi
 
 # Check and stop running puppet cluster
-./shutdown_puppet_cluster.sh
+if [[ -f "cluster.txt" ]]; then
+  ./shutdown_puppet_cluster.sh
+fi
 
 # File to save launched container names
 CONTAINERS_LIST_FILE="cluster.txt"

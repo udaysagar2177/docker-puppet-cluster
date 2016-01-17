@@ -2,10 +2,10 @@
 set -x
 
 # setup the Puppet cluster
-./setup_puppet_cluster.sh
+./setup_puppet_cluster.sh -n -b
 
 # sleep to allow Puppet agent runs
-sleep 10
+sleep 60
 
 # Exec into each container and check if file /opt/hello is created
 CONTAINERS_LIST_FILE="cluster.txt"
