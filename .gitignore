@@ -3,3 +3,4 @@ puppetmaster/modules/*
 cluster.txt
 *.sh-e
 *.she
+.DS_Store
