@@ -8,7 +8,7 @@ Complete automated setup of Puppet cluster using Docker
   - Docker must be installed on your system
 
 ## Overview
-You can now setup a Puppetmaster and 8 Puppet agents by executing just one script. Puppetmaster is installed on Ubuntu 14.04 Docker image while 8 Puppet agents are installed on the following 7 Docker images:
+You can now setup a Puppetmaster and 10 Puppet agents by executing just one script. Puppetmaster is installed on Ubuntu 14.04 Docker image while 10 Puppet agents are installed on the following 10 Docker images:
   * Ubuntu 12.04
   * Ubuntu 14.04
   * Ubuntu 15.04
@@ -17,9 +17,11 @@ You can now setup a Puppetmaster and 8 Puppet agents by executing just one scrip
   * Amazon Linux 2014.09
   * Amazon Linux 2015.03
   * Amazon Linux 2015.09
+  * Debian GNU/Linux 7 (Wheezy)
+  * Debian GNU/Linux 8 (Jessie)
 
 ##### NOTE:
-If you want to run Puppet agents on any of the Amazon Linux OS, You should setup this whole cluster on EC2 instance, because Amazon Linux Docker images will query Amazon repositories for software installations and Amazon repository links will be inaccessible from your local machine. Also, change os_array to include pa_amzlinux201409, pa_amzlinux201503 and pa_amzlinux201509 folders.
+If you want to run Puppet agents on any of the Amazon Linux OS, You should setup this whole cluster on EC2 instance, because Amazon Linux Docker images will query Amazon repositories for software installations and Amazon repository links will be inaccessible from your local machine. Also, change os_array variable inside `setup_puppet_cluster.sh` to include `pa_amzlinux201409`, `pa_amzlinux201503` and `pa_amzlinux201509` folders.
 
 ## Usage
 ##### setup_puppet_cluster.sh
@@ -31,7 +33,9 @@ Two command line options are available to this script. They are
 
 This script will write the names of the launched Docker containers into a local file `cluster.txt`. This file will be used by other scripts to interact with the containers and so, it uses a naming convention. The Puppet master must be named as 'puppet'. The Puppet agents must be named as puppet_agent_\<serial_number\>. By default, setup_puppet_cluster.sh follows this convention.
 
-You can tweak this script to customize the type of operating system on which your Puppet agents must be running. Suppose, you want to run only 3 Puppet agents on Ubuntu:14.04, then change os_array to `os_array=(pa_ubuntu1404 pa_ubuntu1404 pa_ubuntu1404)`
+**NOTE:** You can tweak this script to customize the type of operating system on which your Puppet agents must be running. Suppose you want to run 3 Puppet agents only on Ubuntu:14.04, then change os_array to 
+
+`os_array=(pa_ubuntu1404 pa_ubuntu1404 pa_ubuntu1404)`
 
 ##### shutdown_puppet_cluster.sh
 Execute this script to shutdown the cluster. It will stop and remove all the containers listed in `cluster.txt`
