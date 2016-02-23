@@ -24,6 +24,8 @@ You can now setup a Puppetmaster and 10 Puppet agents by executing just one scri
 If you want to run Puppet agents on any of the Amazon Linux OS, You should setup this whole cluster on EC2 instance, because Amazon Linux Docker images will query Amazon repositories for software installations and Amazon repository links will be inaccessible from your local machine. Also, change os_array variable inside `setup_puppet_cluster.sh` to include `pa_amzlinux201409`, `pa_amzlinux201503` and `pa_amzlinux201509` folders.
 
 ## Usage
+Browse puppetmaster folder to see how things are setup. You have a site.pp inside manifests with a simple File block that will create a new file. You can edit this site.pp to include your configuration. Then, create a modules directory inside puppetmaster folder and paste your new Puppet modules in there, the modules directory will get mounted on Puppetmaster Docker container. For simplicity, Puppetmaster's certificate authority will autosign all certificate signing requests, check [here](https://docs.puppetlabs.com/puppet/latest/reference/ssl_autosign.html#nave-autosigning) for more options.
+
 ##### setup_puppet_cluster.sh
 Use this script to setup and start the cluster.
 
