@@ -1,4 +1,5 @@
 FROM ambakshi/amazon-linux:2015.03
+MAINTAINER Uday Sagar Shiramshetty <udaysagar.2177@gmail.com>
 
 RUN yum install -y vim curl wget net-tools
 

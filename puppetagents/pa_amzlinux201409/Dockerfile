@@ -1,4 +1,5 @@
 FROM fujiang/amazon-linux:2014.09
+MAINTAINER Uday Sagar Shiramshetty <udaysagar.2177@gmail.com>
 
 RUN yum install -y vim curl wget net-tools
 

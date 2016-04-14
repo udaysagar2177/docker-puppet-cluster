@@ -1,4 +1,5 @@
 FROM debian:8.2
+MAINTAINER Uday Sagar Shiramshetty <udaysagar.2177@gmail.com>
 
 RUN apt-get update
 RUN apt-get install -y vim 

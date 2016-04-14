@@ -1,4 +1,5 @@
 FROM centos:7
+MAINTAINER Uday Sagar Shiramshetty <udaysagar.2177@gmail.com>
 
 RUN yum -y update
 RUN yum install -y vim curl wget net-tools
