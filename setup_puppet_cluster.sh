@@ -85,7 +85,9 @@ fi
 
 # Check and stop running puppet cluster
 if [[ -f "cluster.txt" ]]; then
+  set +e
   ./shutdown_puppet_cluster.sh
+  set -e
 fi
 
 # File to save launched container names

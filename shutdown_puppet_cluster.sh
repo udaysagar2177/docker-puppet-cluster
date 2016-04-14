@@ -1,5 +1,4 @@
 #!/bin/bash
-set -xe
 
 CONTAINERS_LIST_FILE="cluster.txt"
 
